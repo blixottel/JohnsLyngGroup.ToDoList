@@ -1,0 +1,37 @@
+<div class="todo-container">
+    <h2>ToDo List</h2>
+    
+    <div *ngIf="errorMessage" class="error-message" (click)="clearError()">
+      {{ errorMessage }}
+      <span class="error-close">&times;</span>
+    </div>
+    
+    <div *ngIf="isLoading | async" class="loading-spinner">
+      <div class="spinner"></div>
+    </div>
+  
+    <ul class="todo-list" [class.loading]="isLoading | async">
+      <li *ngFor="let todo of todos" class="todo-item">
+        <label class="checkbox-container">
+          <input type="checkbox" (change)="removeTodo(todo.id)">
+          <span class="checkmark"></span>
+        </label>
+        <span class="task-text">{{ todo.task }}</span>
+      </li>
+      
+      <li class="todo-item new-todo">
+        <label class="checkbox-container">
+          <span class="checkmark disabled"></span>
+        </label>
+        <input 
+          #newTodoInput
+          type="text" 
+          class="new-todo-input"
+          placeholder="Add new task..."
+          [(ngModel)]="newTask"
+          (keyup.enter)="addTodo()"
+          (blur)="addTodo()"
+        >
+      </li>
+    </ul>
+  </div>
